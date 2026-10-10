@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Your cart | ShopEasy{% endblock %}
+{% block content %}
+<h1>Your cart</h1>
+<div id="cart-root"
+     data-auth="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+     data-login="{% url 'login' %}?next={% url 'cart' %}"
+     data-checkout="{% url 'checkout' %}"></div>
+{% endblock %}

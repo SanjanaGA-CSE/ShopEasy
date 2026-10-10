@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}{{ product.name }} | ShopEasy{% endblock %}
+{% block content %}
+<a href="{% url 'home' %}" class="back">Back to products</a>
+<section class="detail">
+  <div class="detail-image"><img src="{{ product.image_url }}" alt="{{ product.name }}"></div>
+  <div class="detail-info">
+    <h1>{{ product.name }}</h1>
+    <p class="price big">₹{{ product.price|floatformat:"-2"|intcomma }}</p>
+    <p>{{ product.description|linebreaksbr }}</p>
+    <p class="muted">
+      {% if product.stock > 0 %}{{ product.stock }} in stock{% else %}Currently out of stock{% endif %}
+    </p>
+    {% if product.stock > 0 %}
+      <button type="button" class="btn add-to-cart"
+              data-id="{{ product.pk }}"
+              data-name="{{ product.name }}"
+              data-price="{{ product.price }}"
+              data-image="{{ product.image_url }}"
+              data-stock="{{ product.stock }}">Add to cart</button>
+    {% else %}
+      <button type="button" class="btn" disabled>Out of stock</button>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

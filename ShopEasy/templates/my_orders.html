@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}My orders | ShopEasy{% endblock %}
+{% block content %}
+<h1>My orders</h1>
+{% for order in orders %}
+<section class="panel">
+  <h2>Order #{{ order.id }}</h2>
+  <p class="muted">{{ order.created_at|date:"d M Y, H:i" }} &middot; {{ order.status }}</p>
+  <ul>
+    {% for item in order.items.all %}
+      <li>{{ item.quantity }} &times; {{ item.product.name }} at ₹{{ item.price|floatformat:"-2"|intcomma }}</li>
+    {% endfor %}
+  </ul>
+  <p><strong>Total: ₹{{ order.total|floatformat:"-2"|intcomma }}</strong></p>
+</section>
+{% empty %}
+  <p class="empty">You haven't placed any orders yet. <a href="{% url 'home' %}">Start shopping</a>.</p>
+{% endfor %}
+{% endblock %}
